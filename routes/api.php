@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,10 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::get('/order-statuses', [OrderStatusController::class, 'index']);
     Route::get('/order-statuses/{uuid}', [OrderStatusController::class, 'show']);
+
+    Route::post('/admin/login', [AdminController::class, 'loginAdmin']);
+
+    Route::middleware(['auth:api', 'admin'])->group(function () {
+        Route::post('/admin/create', [AdminController::class, 'createAdmin']);
+    });
 });
