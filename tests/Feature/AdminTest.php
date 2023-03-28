@@ -88,10 +88,7 @@ class AdminTest extends TestCase
         // Act
         $this->freezeTime();
 
-        $response = $this->postJson('/api/v1/admin/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        $response = $this->sendLoginRequest($user->email, 'password');
 
         // Assert
         $this->assertSuccessResponseMacro($response, [
@@ -112,10 +109,16 @@ class AdminTest extends TestCase
         ]);
 
         // Act
-        $response = $this->postJson('/api/v1/admin/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        $response = $this->sendLoginRequest($user->email, 'password');
+
+        // Assert
+        $this->assertErrorResponseMacro($response, 422, 'Failed to authenticate user');
+    }
+
+    public function test_cannot_login_with_invalid_credentials()
+    {
+        // Act
+        $response = $this->sendLoginRequest('', '');
 
         // Assert
         $this->assertErrorResponseMacro($response, 422, 'Failed to authenticate user');
@@ -133,6 +136,14 @@ class AdminTest extends TestCase
             'address' => $user->address,
             'phone_number' => $user->phone_number,
             'marketing' => $user->is_marketing,
+        ]);
+    }
+
+    private function sendLoginRequest(string $email, string $password)
+    {
+        return $this->postJson('/api/v1/admin/login', [
+            'email' => $email,
+            'password' => $password,
         ]);
     }
 }

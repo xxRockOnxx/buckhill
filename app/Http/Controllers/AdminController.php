@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateAdminRequest;
-use App\Http\Requests\LoginAdminRequest;
+use App\Http\Requests\LoginRequest;
 use App\Jwt\JwtService;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -45,7 +45,7 @@ class AdminController extends Controller
         return response()->success(200, $response);
     }
 
-    public function loginAdmin(LoginAdminRequest $request, JwtService $jwtService)
+    public function loginAdmin(LoginRequest $request, JwtService $jwtService)
     {
         $credentials = $request->only(['email', 'password']);
         $credentials['is_admin'] = true;

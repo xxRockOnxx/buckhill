@@ -56,12 +56,12 @@ class UserController
         return response()->success(200, $response);
     }
 
-    public function loginUser(LoginRequest $request, Configuration $config)
+    public function loginUser(LoginRequest $request, JwtService $jwtService)
     {
         $credentials = $request->only('email', 'password');
 
         if (!auth()->validate($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->error(422, 'Failed to authenticate user');
         }
 
         /** @var User */
@@ -69,15 +69,12 @@ class UserController
         $user->last_login_at = now();
         $user->save();
 
-        $token = $config
-            ->builder()
-            ->expiresAt(now()->addMinutes(config('jwt.ttl'))->toDateTimeImmutable())
-            ->issuedBy(config('app.url'))
-            ->withClaim('user_uuid', $user->uuid)
-            ->getToken($config->signer(), $config->signingKey());
+        $token = $jwtService->issueToken([
+            'user_uuid' => $user->uuid,
+        ]);
 
         return response()->success(200, [
-            'token' => $token->toString(),
+            'token' => $token,
         ]);
     }
 }

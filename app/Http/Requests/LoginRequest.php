@@ -21,9 +21,14 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'email' => 'required|email',
-            'password' => 'required',
-        ];
+        // Example response on Swagger docs for failed login is always 422 with just a message.
+        // If validation is wanted, uncomment the following lines.
+        //
+        // return [
+        //     'email' => 'required|email',
+        //     'password' => 'required',
+        // ];
+
+        return [];
     }
 }

@@ -98,6 +98,16 @@ class UserTest extends TestCase
         $this->assertTrue($now->eq($user->fresh()->last_login_at));
     }
 
+    public function test_cannot_login_with_invalid_credentials()
+    {
+        $response = $this->postJson('/api/v1/user/login', [
+            'email' => '',
+            'password' => '',
+        ]);
+
+        $this->assertErrorResponseMacro($response, 422, 'Failed to authenticate user');
+    }
+
     public function test_can_get_authenticated_user()
     {
         // Arrange
