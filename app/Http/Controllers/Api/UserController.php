@@ -17,6 +17,11 @@ class UserController
         $user = $request->user();
 
         return $user->orders()
+            ->with([
+                'orderStatus',
+                'payment',
+                'user',
+            ])
             ->orderBy($request->input('sort', 'created_at'), $request->boolean('desc') ? 'desc' : 'asc')
             ->paginate($request->input('limit', 10), ['*'], 'page', $request->input('page', 1));
     }

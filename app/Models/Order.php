@@ -15,6 +15,13 @@ class Order extends Model
         'shipped_at' => 'datetime',
     ];
 
+    protected $hidden = [
+        'id',
+        'user_id',
+        'payment_id',
+        'order_status_id',
+    ];
+
     public function payment()
     {
         return $this->belongsTo(Payment::class);

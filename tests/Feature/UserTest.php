@@ -119,6 +119,14 @@ class UserTest extends TestCase
         $this->assertEquals(5, $response->json('per_page'));
         $this->assertEquals(1, $response->json('current_page'));
         $this->assertEquals(2, $response->json('last_page'));
+
+        // The API should return the orders with the relations loaded
+        $orders->load([
+            'orderStatus',
+            'payment',
+            'user',
+        ]);
+
         $this->assertEquals($orders->take(5)->toArray(), $response->json('data'));
         $this->assertNotContains($orders->skip(5)->take(5)->toArray(), $response->json('data'));
         $this->assertNotContains($orders2->toArray(), $response->json('data'));
