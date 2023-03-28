@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             OrderStatusSeeder::class,
+            DefaultAdminSeeder::class,
         ]);
     }
 }
