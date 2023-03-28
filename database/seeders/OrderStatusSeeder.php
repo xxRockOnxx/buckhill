@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
 use App\Models\OrderStatus;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -21,13 +22,11 @@ class OrderStatusSeeder extends Seeder
             'cancelled',
         ];
 
-        $data = array_map(function ($status) {
-            return [
-                'uuid' => Str::uuid(),
-                'title' => $status,
-            ];
-        }, $statuses);
-
-        OrderStatus::insert($data);
+        foreach ($statuses as $status) {
+            $model = new OrderStatus();
+            $model->title = $status;
+            $model->uuid = Str::uuid();
+            $model->save();
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/user', [UserController::class, 'getUser']);
         Route::get('/user/orders', [UserController::class, 'getUserOrders']);
     });
+
+    Route::get('/order-statuses', [OrderStatusController::class, 'index']);
+    Route::get('/order-statuses/{uuid}', [OrderStatusController::class, 'show']);
 });
