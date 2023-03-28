@@ -45,7 +45,25 @@ class JwtGuardTest extends TestCase
         $this->assertFalse($invalid);
     }
 
-    // Handle invalid token
+    public function test_invalid_token()
+    {
+        app(Request::class)->headers->set('Authorization', 'Bearer 123456');
 
-    // Handle expired token
+        $this->assertFalse(auth()->check());
+        $this->assertNull(auth()->user());
+    }
+
+    public function test_expired_token()
+    {
+        // Setup
+        $this->travelTo(now()->subHours(config('jwt.ttl') + 1));
+        $user = User::factory()->create();
+        $token = app(JwtService::class)->issueToken(['user_uuid' => $user->uuid]);
+        app(Request::class)->headers->set('Authorization', 'Bearer ' . $token);
+
+        // Assert
+        $this->travelBack();
+        $this->assertFalse(auth()->check());
+        $this->assertNull(auth()->user());
+    }
 }

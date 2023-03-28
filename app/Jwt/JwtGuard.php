@@ -6,6 +6,7 @@ use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
+use Lcobucci\JWT\Exception;
 
 class JwtGuard implements Guard
 {
@@ -52,6 +53,16 @@ class JwtGuard implements Guard
 
         $payload = $this->getToken();
 
+        if (!$payload) {
+            return null;
+        }
+
+        $exp = $payload['exp'];
+
+        if (now()->greaterThanOrEqualTo($exp)) {
+            return null;
+        }
+
         $uuid = $payload['user_uuid'];
 
         return $this->provider->retrieveByCredentials(['uuid' => $uuid]);
@@ -61,6 +72,10 @@ class JwtGuard implements Guard
     {
         $token = $this->request->bearerToken();
 
-        return $this->service->parseToken($token);
+        try {
+            return $this->service->parseToken($token);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }
