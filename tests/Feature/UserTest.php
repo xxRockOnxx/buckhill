@@ -51,17 +51,15 @@ class UserTest extends TestCase
             'avatar' => 'https://example.com/avatar.png',
         ]);
 
-        $response
-            ->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'first_name',
-                'last_name',
-                'email',
-                'password_confirmation',
-                'address',
-                'phone_number',
-                'avatar',
-            ]);
+        $this->assertErrorResponseMacro($response, 422, 'Failed Validation', [
+            'first_name' => true,
+            'last_name' => true,
+            'email' => true,
+            'password_confirmation' => true,
+            'address' => true,
+            'phone_number' => true,
+            'avatar' => true,
+        ]);
     }
 
     public function test_can_login()
@@ -101,7 +99,7 @@ class UserTest extends TestCase
     {
         $response = $this->getJson('/api/v1/user');
 
-        $response->assertStatus(401);
+        $this->assertErrorResponseMacro($response, 401, 'Unauthorized');
     }
 
     public function test_can_get_authenticated_user_orders()
@@ -148,6 +146,6 @@ class UserTest extends TestCase
     {
         $response = $this->getJson('/api/v1/user/orders');
 
-        $response->assertStatus(401);
+        $this->assertErrorResponseMacro($response, 401, 'Unauthorized');
     }
 }

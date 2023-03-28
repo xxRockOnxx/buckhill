@@ -30,4 +30,19 @@ abstract class TestCase extends BaseTestCase
 
         return $response;
     }
+
+    public function assertErrorResponseMacro($response, $code = 500, $error = null, $errors = [], $trace = [])
+    {
+        $response->assertStatus($code);
+
+        $response->assertJson([
+            'success' => 0,
+            'data' => [],
+            'error' => $error,
+            'errors' => $errors,
+            'trace' => $trace,
+        ]);
+
+        return $response;
+    }
 }
