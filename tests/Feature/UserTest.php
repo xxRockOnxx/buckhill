@@ -82,10 +82,7 @@ class UserTest extends TestCase
         // Act
         $this->freezeTime();
 
-        $response = $this->postJson('/api/v1/user/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        $response = $this->sendLoginRequest($user->email, 'password');
 
         // Assert
         $this->assertSuccessResponseMacro($response, [
@@ -100,10 +97,18 @@ class UserTest extends TestCase
 
     public function test_cannot_login_with_invalid_credentials()
     {
-        $response = $this->postJson('/api/v1/user/login', [
-            'email' => '',
-            'password' => '',
+        $response = $this->sendLoginRequest('', '');
+
+        $this->assertErrorResponseMacro($response, 422, 'Failed to authenticate user');
+    }
+
+    public function test_cannot_login_with_admin_credentials()
+    {
+        $user = User::factory()->create([
+            'is_admin' => true,
         ]);
+
+        $response = $this->sendLoginRequest($user->email, 'password');
 
         $this->assertErrorResponseMacro($response, 422, 'Failed to authenticate user');
     }
@@ -178,5 +183,13 @@ class UserTest extends TestCase
         $response = $this->getJson('/api/v1/user/orders');
 
         $this->assertErrorResponseMacro($response, 401, 'Unauthorized');
+    }
+
+    private function sendLoginRequest(string $email, string $password)
+    {
+        return $this->postJson('/api/v1/user/login', [
+            'email' => $email,
+            'password' => $password,
+        ]);
     }
 }

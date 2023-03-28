@@ -59,6 +59,7 @@ class UserController
     public function loginUser(LoginRequest $request, JwtService $jwtService)
     {
         $credentials = $request->only('email', 'password');
+        $credentials['is_admin'] = false;
 
         if (!auth()->validate($credentials)) {
             return response()->error(422, 'Failed to authenticate user');
