@@ -17,5 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'v1'], function () {
     Route::post('/user/create', [UserController::class, 'createUser']);
     Route::post('/user/login', [UserController::class, 'loginUser']);
-    Route::middleware('auth:api')->get('/user', [UserController::class, 'getUser']);
+
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/user', [UserController::class, 'getUser']);
+        Route::get('/user/orders', [UserController::class, 'getUserOrders']);
+    });
 });

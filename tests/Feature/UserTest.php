@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -81,6 +82,45 @@ class UserTest extends TestCase
     public function test_cannot_get_authenticated_user_without_token()
     {
         $response = $this->getJson('/api/v1/user');
+
+        $response->assertStatus(401);
+    }
+
+    public function test_can_get_authenticated_user_orders()
+    {
+        // Arrange
+        $this->seed();
+
+        $user = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $orders = Order::factory()
+            ->count(10)
+            ->for($user)
+            ->create();
+
+        $orders2 = Order::factory()
+            ->count(3)
+            ->for($user2)
+            ->create();
+
+        // Act
+        $response = $this->actingAs($user, 'api')->getJson('/api/v1/user/orders?page=1&limit=5');
+
+        // Assert
+        $response->assertOk();
+        $this->assertEquals(10, $response->json('total'));
+        $this->assertEquals(5, $response->json('per_page'));
+        $this->assertEquals(1, $response->json('current_page'));
+        $this->assertEquals(2, $response->json('last_page'));
+        $this->assertEquals($orders->take(5)->toArray(), $response->json('data'));
+        $this->assertNotContains($orders->skip(5)->take(5)->toArray(), $response->json('data'));
+        $this->assertNotContains($orders2->toArray(), $response->json('data'));
+    }
+
+    public function test_cannot_get_orders_without_token()
+    {
+        $response = $this->getJson('/api/v1/user/orders');
 
         $response->assertStatus(401);
     }

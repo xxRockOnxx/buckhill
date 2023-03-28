@@ -11,6 +11,16 @@ use Lcobucci\JWT\Configuration;
 
 class UserController
 {
+    public function getUserOrders(Request $request)
+    {
+        /** @var User */
+        $user = $request->user();
+
+        return $user->orders()
+            ->orderBy($request->input('sort', 'created_at'), $request->boolean('desc') ? 'desc' : 'asc')
+            ->paginate($request->input('limit', 10), ['*'], 'page', $request->input('page', 1));
+    }
+
     public function getUser(Request $request)
     {
         return $request->user();
