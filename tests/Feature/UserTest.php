@@ -13,8 +13,10 @@ class UserTest extends TestCase
 
     public function test_can_create_user()
     {
+        // Arrange
         $user = User::factory()->make();
 
+        // Act
         $response = $this->postJson('/api/v1/user/create', [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
@@ -27,8 +29,14 @@ class UserTest extends TestCase
             'is_marketing' => $user->is_marketing,
         ]);
 
-        $response->assertCreated();
+        // Assert
+        $data = $user->toArray();
+        $data['email_verified_at'] = null;
+        $data['uuid'] = true;
 
+        $this->assertSuccessResponseMacro($response, $data);
+
+        // Make sure the user is actually created in the database
         $this->assertDatabaseHas('users', [
             'email' => $user->email,
         ]);
@@ -58,15 +66,19 @@ class UserTest extends TestCase
 
     public function test_can_login()
     {
+        // Arrange
         $user = User::factory()->create();
 
+        // Act
         $response = $this->postJson('/api/v1/user/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
 
-        $response->assertOk();
-        $response->assertJsonStructure(['token']);
+        // Assert
+        $this->assertSuccessResponseMacro($response, [
+            'token' => true,
+        ]);
     }
 
     public function test_can_get_authenticated_user()

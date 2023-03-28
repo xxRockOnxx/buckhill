@@ -42,10 +42,14 @@ class UserController
         $user->address = $request->address;
         $user->phone_number = $request->phone_number;
         $user->avatar = $request->avatar;
-        $user->is_marketing = $request->is_marketing;
+        $user->is_marketing = $request->input('is_marketing', false);
         $user->save();
 
-        return $user;
+        // Set initial values so they'll be part of the response
+        $user->email_verified_at = null;
+        $user->last_login_at = null;
+
+        return response()->success(200, $user);
     }
 
     public function loginUser(LoginRequest $request, Configuration $config)
@@ -63,7 +67,7 @@ class UserController
             ->withClaim('user_uuid', auth()->user()->uuid)
             ->getToken($config->signer(), $config->signingKey());
 
-        return response()->json([
+        return response()->success(200, [
             'token' => $token->toString(),
         ]);
     }
