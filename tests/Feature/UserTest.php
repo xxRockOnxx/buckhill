@@ -76,6 +76,12 @@ class UserTest extends TestCase
         $response = $this->actingAs($user, 'api')->getJson('/api/v1/user');
 
         $response->assertOk();
+        $response->assertJsonMissing([
+            'id',
+            'password',
+            'remember_token',
+            'is_admin',
+        ]);
         $response->assertJson($user->toArray());
     }
 
