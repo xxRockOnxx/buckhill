@@ -80,6 +80,8 @@ class UserTest extends TestCase
         $user = User::factory()->create();
 
         // Act
+        $this->freezeTime();
+
         $response = $this->postJson('/api/v1/user/login', [
             'email' => $user->email,
             'password' => 'password',
@@ -89,6 +91,11 @@ class UserTest extends TestCase
         $this->assertSuccessResponseMacro($response, [
             'token' => true,
         ]);
+
+        // Database does not store microseconds, so we need to remove it.
+        $now = now()->microsecond(0);
+
+        $this->assertTrue($now->eq($user->fresh()->last_login_at));
     }
 
     public function test_can_get_authenticated_user()

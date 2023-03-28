@@ -64,11 +64,16 @@ class UserController
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        /** @var User */
+        $user = auth()->user();
+        $user->last_login_at = now();
+        $user->save();
+
         $token = $config
             ->builder()
             ->expiresAt(now()->addMinutes(config('jwt.ttl'))->toDateTimeImmutable())
             ->issuedBy(config('app.url'))
-            ->withClaim('user_uuid', auth()->user()->uuid)
+            ->withClaim('user_uuid', $user->uuid)
             ->getToken($config->signer(), $config->signingKey());
 
         return response()->success(200, [
