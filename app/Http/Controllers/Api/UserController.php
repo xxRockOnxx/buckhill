@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\LoginRequest;
+use App\Jwt\JwtService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Lcobucci\JWT\Configuration;
@@ -31,7 +32,7 @@ class UserController
         return $request->user();
     }
 
-    public function createUser(CreateUserRequest $request)
+    public function createUser(CreateUserRequest $request, JwtService $jwtService)
     {
         $user = new User();
         $user->uuid = Str::uuid();
@@ -45,11 +46,14 @@ class UserController
         $user->is_marketing = $request->input('is_marketing', false);
         $user->save();
 
-        // Set initial values so they'll be part of the response
-        $user->email_verified_at = null;
-        $user->last_login_at = null;
+        $token = $jwtService->issueToken([
+            'user_uuid' => $user->uuid,
+        ]);
 
-        return response()->success(200, $user);
+        $response = $user->toArray();
+        $response['token'] = $token;
+
+        return response()->success(200, $response);
     }
 
     public function loginUser(LoginRequest $request, Configuration $config)
