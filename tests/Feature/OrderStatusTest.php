@@ -25,11 +25,7 @@ class OrderStatusTest extends TestCase
             ->orderBy('title', 'asc')
             ->paginate(2, ['*'], 'page', 2);
 
-        $this->assertEquals($status->currentPage(), $response->json('current_page'));
-        $this->assertEquals($status->perPage(), $response->json('per_page'));
-        $this->assertEquals($status->total(), $response->json('total'));
-        $this->assertEquals($status->lastPage(), $response->json('last_page'));
-        $this->assertEquals(collect($status->items())->toArray(), $response->json('data'));
+        $response->assertJson(collect($status)->toArray());
     }
 
     public function test_can_get_order_status()

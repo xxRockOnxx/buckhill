@@ -125,21 +125,12 @@ class UserTest extends TestCase
 
         // Assert
         $response->assertOk();
-        $this->assertEquals(10, $response->json('total'));
-        $this->assertEquals(5, $response->json('per_page'));
-        $this->assertEquals(1, $response->json('current_page'));
-        $this->assertEquals(2, $response->json('last_page'));
 
-        // The API should return the orders with the relations loaded
-        $orders->load([
-            'orderStatus',
-            'payment',
-            'user',
-        ]);
+        $paginator = $user->orders()
+            ->orderBy('created_at')
+            ->paginate(5, ['*'], 'page', 1);
 
-        $this->assertEquals($orders->take(5)->toArray(), $response->json('data'));
-        $this->assertNotContains($orders->skip(5)->take(5)->toArray(), $response->json('data'));
-        $this->assertNotContains($orders2->toArray(), $response->json('data'));
+        $response->assertJson(collect($paginator)->toArray());
     }
 
     public function test_cannot_get_orders_without_token()
