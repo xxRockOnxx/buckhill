@@ -93,18 +93,29 @@ class UserTest extends TestCase
 
     public function test_can_get_authenticated_user()
     {
+        // Arrange
         $user = User::factory()->create();
 
+        // Act
         $response = $this->actingAs($user, 'api')->getJson('/api/v1/user');
 
-        $response->assertOk();
-        $response->assertJsonMissing([
-            'id',
-            'password',
-            'remember_token',
-            'is_admin',
+        // Assert
+        $data = collect($user->toArray())->only([
+            'uuid',
+            'first_name',
+            'last_name',
+            'email',
+            'email_verified_at',
+            'avatar',
+            'address',
+            'phonee_number',
+            'is_marketing',
+            'created_at',
+            'updated_at',
+            'last_login_at',
         ]);
-        $response->assertJson($user->toArray());
+
+        $this->assertSuccessResponseMacro($response, $data->toArray());
     }
 
     public function test_cannot_get_authenticated_user_without_token()

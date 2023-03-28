@@ -29,7 +29,7 @@ class UserController
 
     public function getUser(Request $request)
     {
-        return $request->user();
+        return response()->success(200, $request->user());
     }
 
     public function createUser(CreateUserRequest $request, JwtService $jwtService)
