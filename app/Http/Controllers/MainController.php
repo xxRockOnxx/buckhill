@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Promotion;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,5 +30,15 @@ class MainController extends Controller
         }
 
         return Response::success(200, $post->toArray());
+    }
+
+    /**
+     * @return LengthAwarePaginator<Promotion>
+     */
+    public function promotions(Request $request): LengthAwarePaginator
+    {
+        return Promotion::query()
+            ->orderBy($request->input('sort', 'created_at'), $request->boolean('desc') ? 'desc' : 'asc')
+            ->paginate($request->input('limit', 10), ['*'], 'page', $request->input('page', 1));
     }
 }
