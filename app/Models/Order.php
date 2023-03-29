@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\HasListing as HasListingContract;
+use App\Models\Traits\HasListing;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Order extends Model
+class Order extends Model implements HasListingContract
 {
-    use HasFactory;
+    use HasFactory, HasListing;
 
     protected $casts = [
         'products' => 'array',
@@ -22,6 +24,19 @@ class Order extends Model
         'payment_id',
         'order_status_id',
     ];
+
+    protected $sortable = [
+        'delivery_fee',
+        'amount',
+        'created_at',
+        'updated_at',
+        'shipped_at',
+    ];
+
+    public function getSortableColumns(): array
+    {
+        return $this->sortable;
+    }
 
     /**
      * @return BelongsTo<Payment, Order>

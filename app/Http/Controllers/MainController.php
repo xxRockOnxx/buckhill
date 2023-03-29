@@ -16,9 +16,7 @@ class MainController extends Controller
      */
     public function blogs(Request $request): LengthAwarePaginator
     {
-        return Post::query()
-            ->orderBy($request->input('sort', 'created_at'), $request->boolean('desc') ? 'desc' : 'asc')
-            ->paginate($request->input('limit', 10), ['*'], 'page', $request->input('page', 1));
+        return Post::listing($request);
     }
 
     public function blog(string $uuid): JsonResponse
@@ -37,8 +35,6 @@ class MainController extends Controller
      */
     public function promotions(Request $request): LengthAwarePaginator
     {
-        return Promotion::query()
-            ->orderBy($request->input('sort', 'created_at'), $request->boolean('desc') ? 'desc' : 'asc')
-            ->paginate($request->input('limit', 10), ['*'], 'page', $request->input('page', 1));
+        return Promotion::listing($request);
     }
 }

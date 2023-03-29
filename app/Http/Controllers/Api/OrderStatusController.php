@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\OrderStatus;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Response;
 
 class OrderStatusController
@@ -14,9 +15,7 @@ class OrderStatusController
      */
     public function index(): LengthAwarePaginator
     {
-        return OrderStatus::query()
-            ->orderBy(request()->input('sortBy', 'created_at'), request()->boolean('desc') ? 'desc' : 'asc')
-            ->paginate(request()->input('limit', 10), ['*'], 'page', request()->input('page', 1));
+        return OrderStatus::listing(request());
     }
 
     public function show(string $uuid): JsonResponse
