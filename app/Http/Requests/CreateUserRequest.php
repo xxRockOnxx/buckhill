@@ -33,4 +33,11 @@ class CreateUserRequest extends FormRequest
             'is_marketing' => 'boolean',
         ];
     }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'is_marketing' => $this->boolean('is_marketing'),
+        ]);
+    }
 }

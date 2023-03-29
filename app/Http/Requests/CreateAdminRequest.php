@@ -38,4 +38,11 @@ class CreateAdminRequest extends FormRequest
             'marketing' => 'boolean',
         ];
     }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'marketing' => $this->boolean('marketing'),
+        ]);
+    }
 }
