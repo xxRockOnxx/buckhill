@@ -37,7 +37,7 @@ class LcobucciJwtService implements JwtService
         // Default Lcobucci implementation returns a Plain token.
         // If a different implementation is needed, this method should be
         // updated to handle it.
-        if (!$token instanceof Plain) {
+        if (! $token instanceof Plain) {
             throw new \Exception('Cannot handle token');
         }
 

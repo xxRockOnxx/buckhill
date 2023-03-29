@@ -33,7 +33,7 @@ class JwtGuard implements Guard
     {
         $user = $this->provider->retrieveByCredentials($credentials);
 
-        if (!$user) {
+        if (! $user) {
             return false;
         }
 
@@ -53,13 +53,13 @@ class JwtGuard implements Guard
 
         $token = $this->request->bearerToken();
 
-        if (!$token) {
+        if (! $token) {
             return null;
         }
 
         $payload = $this->parseTokenFromRequest();
 
-        if (!$payload) {
+        if (! $payload) {
             return null;
         }
 
@@ -78,7 +78,7 @@ class JwtGuard implements Guard
     {
         $token = $this->request->bearerToken();
 
-        if (!$token) {
+        if (! $token) {
             return null;
         }
 

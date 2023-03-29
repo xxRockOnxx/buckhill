@@ -12,7 +12,7 @@ class OrderStatus extends Model
 
     protected $fillable = [
         'uuid',
-        'title'
+        'title',
     ];
 
     /**

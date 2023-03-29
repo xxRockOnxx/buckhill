@@ -52,7 +52,7 @@ class AdminController extends Controller
         $credentials = $request->only(['email', 'password']);
         $credentials['is_admin'] = true;
 
-        if (!auth()->validate($credentials)) {
+        if (! auth()->validate($credentials)) {
             return Response::error(422, 'Failed to authenticate user');
         }
 

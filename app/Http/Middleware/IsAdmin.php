@@ -17,7 +17,7 @@ class IsAdmin
     {
         $user = $request->user();
 
-        if (!$user || !$user->is_admin) {
+        if (! $user || ! $user->is_admin) {
             return response()->error(401, 'Unauthorized');
         }
 

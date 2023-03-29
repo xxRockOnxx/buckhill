@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Order;
-use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\LoginRequest;
 use App\Jwt\JwtService;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,7 +35,7 @@ class UserController
 
     public function getUser(Request $request): JsonResponse
     {
-        /** @var User */
+        /** @var User $user */
         $user = $request->user();
 
         return Response::success(200, $user->toArray());
@@ -70,11 +70,11 @@ class UserController
         $credentials = $request->only('email', 'password');
         $credentials['is_admin'] = false;
 
-        if (!auth()->validate($credentials)) {
+        if (! auth()->validate($credentials)) {
             return Response::error(422, 'Failed to authenticate user');
         }
 
-        /** @var User */
+        /** @var User $user */
         $user = auth()->user();
         $user->last_login_at = now();
         $user->save();

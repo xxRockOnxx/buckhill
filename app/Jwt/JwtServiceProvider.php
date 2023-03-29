@@ -26,7 +26,7 @@ class JwtServiceProvider extends ServiceProvider
         Auth::extend('jwt', function ($app, $name, array $config) {
             $provider = Auth::createUserProvider($config['provider']);
 
-            if (!$provider) {
+            if (! $provider) {
                 throw new \InvalidArgumentException("User provider [{$config['provider']}] is not defined.");
             }
 

@@ -15,11 +15,11 @@ class FileController extends Controller
 {
     public function upload(UploadRequest $request): JsonResponse
     {
-        /** @var UploadedFile */
+        /** @var UploadedFile $file */
         $file = $request->file('file');
         $storedFile = $file->store('', 'pet-shop');
 
-        if (!$storedFile) {
+        if (! $storedFile) {
             return Response::error(500, 'File could not be stored');
         }
 
@@ -42,7 +42,7 @@ class FileController extends Controller
     {
         $file = File::where('uuid', $uuid)->first();
 
-        if (!$file) {
+        if (! $file) {
             return Response::error(404, 'File not found');
         }
 
