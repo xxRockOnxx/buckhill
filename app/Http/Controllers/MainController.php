@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Response;
+
+class MainController extends Controller
+{
+    /**
+     * @return LengthAwarePaginator<Post>
+     */
+    public function blogs(Request $request): LengthAwarePaginator
+    {
+        return Post::query()
+            ->orderBy($request->input('sort', 'created_at'), $request->boolean('desc') ? 'desc' : 'asc')
+            ->paginate($request->input('limit', 10), ['*'], 'page', $request->input('page', 1));
+    }
+
+    public function blog(string $uuid): JsonResponse
+    {
+        $post = Post::where('uuid', $uuid)->first();
+
+        if (! $post) {
+            return Response::error(404, 'Post not found');
+        }
+
+        return Response::success(200, $post->toArray());
+    }
+}
