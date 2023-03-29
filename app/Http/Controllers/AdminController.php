@@ -6,11 +6,13 @@ use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\LoginRequest;
 use App\Jwt\JwtService;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
+use Response;
 
 class AdminController extends Controller
 {
-    public function createAdmin(CreateAdminRequest $request, JwtService $jwtService)
+    public function createAdmin(CreateAdminRequest $request, JwtService $jwtService): JsonResponse
     {
         $user = new User();
         $user->uuid = Str::uuid();
@@ -42,16 +44,16 @@ class AdminController extends Controller
 
         $response['token'] = $token;
 
-        return response()->success(200, $response);
+        return Response::success(200, $response);
     }
 
-    public function loginAdmin(LoginRequest $request, JwtService $jwtService)
+    public function loginAdmin(LoginRequest $request, JwtService $jwtService): JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
         $credentials['is_admin'] = true;
 
         if (!auth()->validate($credentials)) {
-            return response()->error(422, 'Failed to authenticate user');
+            return Response::error(422, 'Failed to authenticate user');
         }
 
         /** @var User */
@@ -63,7 +65,7 @@ class AdminController extends Controller
             'user_uuid' => $user->uuid,
         ]);
 
-        return response()->success(200, [
+        return Response::success(200, [
             'token' => $token,
         ]);
     }

@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Response::macro('success', function ($code = 200, $data = [], $extra = []) {
+        Response::macro('success', function (int $code = 200, array $data = [], array $extra = []) {
             return response()->json([
                 'success' => 1,
                 'data' => $data,
@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             ], $code);
         });
 
-        Response::macro('error', function ($code = 500, string $error, $errors = [], $trace = []) {
+        Response::macro('error', function (int $code = 500, string $error = 'Internal Server Error', array $errors = [], array $trace = []) {
             return response()->json([
                 'success' => 0,
                 'data' => [],

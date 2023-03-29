@@ -12,8 +12,14 @@ class JwtGuard implements Guard
 {
     use GuardHelpers;
 
+    /**
+     * @var JwtService
+     */
     protected $service;
 
+    /**
+     * @var Request
+     */
     protected $request;
 
     public function __construct(JwtService $service, UserProvider $provider, Request $request)
@@ -51,7 +57,7 @@ class JwtGuard implements Guard
             return null;
         }
 
-        $payload = $this->getToken();
+        $payload = $this->parseTokenFromRequest();
 
         if (!$payload) {
             return null;
@@ -68,9 +74,13 @@ class JwtGuard implements Guard
         return $this->provider->retrieveByCredentials(['uuid' => $uuid]);
     }
 
-    protected function getToken()
+    protected function parseTokenFromRequest(): array|null
     {
         $token = $this->request->bearerToken();
+
+        if (!$token) {
+            return null;
+        }
 
         try {
             return $this->service->parseToken($token);

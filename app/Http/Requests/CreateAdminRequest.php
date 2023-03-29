@@ -11,7 +11,8 @@ class CreateAdminRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->is_admin;
+        $user = $this->user();
+        return $user && $user->is_admin;
     }
 
     /**

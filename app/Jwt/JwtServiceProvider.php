@@ -11,7 +11,7 @@ use Lcobucci\JWT\Signer\Rsa\Sha256;
 
 class JwtServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $config = Configuration::forAsymmetricSigner(
             new Sha256(),
@@ -24,9 +24,15 @@ class JwtServiceProvider extends ServiceProvider
         $this->app->instance(JwtService::class, new LcobucciJwtService($config));
 
         Auth::extend('jwt', function ($app, $name, array $config) {
+            $provider = Auth::createUserProvider($config['provider']);
+
+            if (!$provider) {
+                throw new \InvalidArgumentException("User provider [{$config['provider']}] is not defined.");
+            }
+
             return new JwtGuard(
                 $this->app->make(JwtService::class),
-                Auth::createUserProvider($config['provider']),
+                $provider,
                 $this->app->make(Request::class),
             );
         });

@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Order;
 use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\LoginRequest;
 use App\Jwt\JwtService;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Lcobucci\JWT\Configuration;
+use Response;
 
 class UserController
 {
-    public function getUserOrders(Request $request)
+    /**
+     * @return LengthAwarePaginator<Order>
+     */
+    public function getUserOrders(Request $request): LengthAwarePaginator
     {
         /** @var User */
         $user = $request->user();
@@ -27,12 +33,15 @@ class UserController
             ->paginate($request->input('limit', 10), ['*'], 'page', $request->input('page', 1));
     }
 
-    public function getUser(Request $request)
+    public function getUser(Request $request): JsonResponse
     {
-        return response()->success(200, $request->user());
+        /** @var User */
+        $user = $request->user();
+
+        return Response::success(200, $user->toArray());
     }
 
-    public function createUser(CreateUserRequest $request, JwtService $jwtService)
+    public function createUser(CreateUserRequest $request, JwtService $jwtService): JsonResponse
     {
         $user = new User();
         $user->uuid = Str::uuid();
@@ -53,16 +62,16 @@ class UserController
         $response = $user->toArray();
         $response['token'] = $token;
 
-        return response()->success(200, $response);
+        return Response::success(200, $response);
     }
 
-    public function loginUser(LoginRequest $request, JwtService $jwtService)
+    public function loginUser(LoginRequest $request, JwtService $jwtService): JsonResponse
     {
         $credentials = $request->only('email', 'password');
         $credentials['is_admin'] = false;
 
         if (!auth()->validate($credentials)) {
-            return response()->error(422, 'Failed to authenticate user');
+            return Response::error(422, 'Failed to authenticate user');
         }
 
         /** @var User */
@@ -74,7 +83,7 @@ class UserController
             'user_uuid' => $user->uuid,
         ]);
 
-        return response()->success(200, [
+        return Response::success(200, [
             'token' => $token,
         ]);
     }

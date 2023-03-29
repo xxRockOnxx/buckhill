@@ -15,10 +15,12 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->is_admin) {
-            return $next($request);
+        $user = $request->user();
+
+        if (!$user || !$user->is_admin) {
+            return response()->error(401, 'Unauthorized');
         }
 
-        return response()->error(401, 'Unauthorized');
+        return $next($request);
     }
 }
