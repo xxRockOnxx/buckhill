@@ -36,7 +36,7 @@ class OrderStatusTest extends TestCase
         $status = OrderStatus::query()->inRandomOrder()->first();
 
         // Act
-        $response = $this->getJson('/api/v1/order-statuses/' . $status->uuid);
+        $response = $this->getJson('/api/v1/order-status/' . $status->uuid);
 
         // Assert
         $this->assertSuccessResponseMacro($response, $status->toArray());
@@ -48,7 +48,7 @@ class OrderStatusTest extends TestCase
         $this->seed();
 
         // Act
-        $response = $this->getJson('/api/v1/order-statuses/' . '00000000-0000-0000-0000-000000000000');
+        $response = $this->getJson('/api/v1/order-status/' . '00000000-0000-0000-0000-000000000000');
 
         // Assert
         $this->assertErrorResponseMacro($response, 404, 'Order status not found');
