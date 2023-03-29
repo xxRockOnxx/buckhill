@@ -1,0 +1,38 @@
+{
+    "name": "lemuel/exchange",
+    "description": "A Laravel package for currency exchange",
+    "require": {
+        "php": ">=8.2.0",
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/collections": "^10.0",
+        "illuminate/http": "^10.0",
+        "illuminate/support": "^10.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Lemuel\\Exchange\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lemuel\\Exchange\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lemuel\\Exchange\\ExchangeServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.0",
+        "orchestra/testbench": "^8.1",
+        "phpunit/phpunit": "^10.0"
+    }
+}
