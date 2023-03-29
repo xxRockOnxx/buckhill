@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\LoginRequest;
@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 use Response;
 
-class AdminController extends Controller
+class AdminController
 {
     public function createAdmin(CreateAdminRequest $request, JwtService $jwtService): JsonResponse
     {

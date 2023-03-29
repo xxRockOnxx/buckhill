@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UploadRequest;
 use App\Models\File;
@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class FileController extends Controller
+class FileController
 {
     public function upload(UploadRequest $request): JsonResponse
     {

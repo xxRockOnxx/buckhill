@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Post;
 use App\Models\Promotion;
@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Response;
 
-class MainController extends Controller
+class MainController
 {
     /**
      * @return LengthAwarePaginator<Post>
