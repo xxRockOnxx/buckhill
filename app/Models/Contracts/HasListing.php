@@ -10,5 +10,8 @@ interface HasListing
 {
     public function scopeListing(Builder $query, Request $request): LengthAwarePaginator;
 
+    /**
+     * @return string[]
+     */
     public function getSortableColumns(): array;
 }

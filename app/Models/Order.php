@@ -4,10 +4,15 @@ namespace App\Models;
 
 use App\Models\Contracts\HasListing as HasListingContract;
 use App\Models\Traits\HasListing;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Http\Request;
 
+/**
+ * @method static LengthAwarePaginator listing(Request $request)
+ */
 class Order extends Model implements HasListingContract
 {
     use HasFactory, HasListing;
@@ -25,17 +30,15 @@ class Order extends Model implements HasListingContract
         'order_status_id',
     ];
 
-    protected $sortable = [
-        'delivery_fee',
-        'amount',
-        'created_at',
-        'updated_at',
-        'shipped_at',
-    ];
-
     public function getSortableColumns(): array
     {
-        return $this->sortable;
+        return [
+            'delivery_fee',
+            'amount',
+            'created_at',
+            'updated_at',
+            'shipped_at',
+        ];
     }
 
     /**

@@ -4,9 +4,14 @@ namespace App\Models;
 
 use App\Models\Contracts\HasListing as HasListingContract;
 use App\Models\Traits\HasListing;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
+/**
+ * @method static LengthAwarePaginator listing(Request $request)
+ */
 class Promotion extends Model implements HasListingContract
 {
     use HasFactory, HasListing;
@@ -15,14 +20,12 @@ class Promotion extends Model implements HasListingContract
         'metadata' => 'array',
     ];
 
-    protected $sortable = [
-        'title',
-        'created_at',
-        'updated_at',
-    ];
-
     public function getSortableColumns(): array
     {
-        return $this->sortable;
+        return [
+            'title',
+            'created_at',
+            'updated_at',
+        ];
     }
 }

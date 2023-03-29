@@ -17,15 +17,13 @@ class OrderStatus extends Model implements HasListingContract
         'title',
     ];
 
-    protected $sortable = [
-        'title',
-        'created_at',
-        'updated_at',
-    ];
-
     public function getSortableColumns(): array
     {
-        return $this->sortable;
+        return [
+            'title',
+            'created_at',
+            'updated_at',
+        ];
     }
 
     /**
