@@ -11,6 +11,10 @@
         {
             "type": "path",
             "url": "./packages/exchange"
+        },
+        {
+            "type": "path",
+            "url": "./packages/notification"
         }
     ],
     "require": {
@@ -21,7 +25,8 @@
         "laravel/tinker": "^2.8",
         "lcobucci/clock": "^3.1",
         "lcobucci/jwt": "^5.0",
-        "lemuel/exchange": "@dev"
+        "lemuel/exchange": "@dev",
+        "lemuel/notification": "@dev"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

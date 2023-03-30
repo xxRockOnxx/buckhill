@@ -1,0 +1,38 @@
+{
+    "name": "lemuel/notification",
+    "description": "A Laravel package for sending order status update to a webhook",
+    "require": {
+        "php": ">=8.2.0",
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/events": "^10.0",
+        "illuminate/queue": "^10.0",
+        "illuminate/support": "^10.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Lemuel\\Notification\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lemuel\\Notification\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lemuel\\Notification\\NotificationServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.0",
+        "orchestra/testbench": "^8.1",
+        "phpunit/phpunit": "^10.0"
+    }
+}

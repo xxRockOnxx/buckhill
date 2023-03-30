@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c10158b0820826cb292a1726ade40418",
+    "content-hash": "7e4faedaba87cd902456c3b529a4d59c",
     "packages": [
         {
             "name": "brick/math",
@@ -1854,13 +1854,19 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/exchange",
-                "reference": "fc6795beacde2c0cc7d64666090ce014be9b5aac"
+                "reference": "836942cf359441c3aa26cba58fb30c56da4a62cf"
             },
             "require": {
+                "guzzlehttp/guzzle": "^7.5",
                 "illuminate/collections": "^10.0",
                 "illuminate/http": "^10.0",
                 "illuminate/support": "^10.0",
                 "php": ">=8.2.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^7.0",
+                "orchestra/testbench": "^8.1",
+                "phpunit/phpunit": "^10.0"
             },
             "type": "library",
             "extra": {
@@ -1878,6 +1884,48 @@
             "autoload-dev": {
                 "psr-4": {
                     "Lemuel\\Exchange\\Tests\\": "tests"
+                }
+            },
+            "description": "A Laravel package for currency exchange",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "lemuel/notification",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/notification",
+                "reference": "f29a18fc940c4b2df0e865f908fc234de7b07af1"
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.5",
+                "illuminate/events": "^10.0",
+                "illuminate/queue": "^10.0",
+                "php": ">=8.2.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^7.0",
+                "orchestra/testbench": "^8.1",
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lemuel\\Notification\\NotificationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lemuel\\Notification\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Lemuel\\Notification\\Tests\\": "tests"
                 }
             },
             "description": "A Laravel package for currency exchange",
@@ -10705,7 +10753,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "lemuel/exchange": 20
+        "lemuel/exchange": 20,
+        "lemuel/notification": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
