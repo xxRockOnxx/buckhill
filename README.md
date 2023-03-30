@@ -4,7 +4,13 @@ This is an example app as part of Buckhill's selection process.
 
 ## Running locally
 
+Copy `.env.example` to `.env`.
+
 The provided `Dockerfile` and `docker-compose.yml` should handle the installation of the required services and dependencies.
+
+For convenience, the public/private keys needed for JWT under `storage/app/jwt` is going to be included.
+
+You can replace them with your own by following the guide for generating JWT key pair below.
 
 ```bash
 docker compose up -d
@@ -17,6 +23,20 @@ docker compose exec php php artisan migrate --seed
 ```
 
 The app should be accessible via `http://localhost:8000`.
+
+## Generate Public/Private key pair
+
+You can use website like https://travistidwell.com/jsencrypt/demo/ for convenience.
+
+You can also generate via CLI by doing:
+
+```bash
+ssh-keygen -t rsa -b 4096 -m PEM -f jwt.key
+```
+
+Put the generated files to `storage/app/jwt` as `jwt.key` for private key and `jwt.pub` for public key.
+
+You can update `config/jwt.php` if you want to use different filenames.
 
 ## Generate IDE Helper
 
