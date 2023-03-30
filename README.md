@@ -18,6 +18,16 @@ docker compose exec php php artisan migrate --seed
 
 The app should be accessible via `http://localhost:8000`.
 
+## Generate IDE Helper
+
+Because everything's handle by Docker, the process for generating `_ide_helper.php` file
+is to run the command via the container and copying it to your host.
+
+```bash
+docker compose exec php php artisan ide-helper:generate
+docker compose cp php:/var/www/html/_ide_helper.php .
+```
+
 ## Level 3 Challenge (Currency exchange rate)
 
 The package required for this challenge can be found under `packages/exchange` directory.
