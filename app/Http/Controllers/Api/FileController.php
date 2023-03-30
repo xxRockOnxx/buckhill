@@ -38,7 +38,7 @@ class FileController
         return Response::success(200, $dbFile->toArray());
     }
 
-    public function download(string $uuid): StreamedResponse
+    public function download(string $uuid): StreamedResponse|JsonResponse
     {
         $file = File::where('uuid', $uuid)->first();
 

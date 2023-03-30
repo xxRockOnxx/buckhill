@@ -73,4 +73,16 @@ class FileTest extends TestCase
         // Assert
         $response->assertDownload($model->name);
     }
+
+    public function test_cannot_download_invalid_uuid()
+    {
+        // Arrange
+        $uuid = Str::uuid();
+
+        // Act
+        $response = $this->get('/api/v1/file/' . $uuid);
+
+        // Assert
+        $this->assertErrorResponseMacro($response, 404, 'File not found');
+    }
 }
