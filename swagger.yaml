@@ -464,6 +464,34 @@ paths:
         '500':
           description: Internal server error
       security: []
+
+  "/api/v1/exchange":
+    get:
+      tags:
+      - Exchange
+      summary: Exchange EUR to another currency
+      operationId: exchange-get
+      parameters:
+      - name: amount
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: currency
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '422':
+          description: Unprocessable Entity
+        '500':
+          description: Internal server error
+      security: []
 components:
   securitySchemes:
     bearerAuth:
@@ -483,5 +511,7 @@ tags:
   description: Order statuses API endpoint
 - name: File
   description: File API endpoint
+- name: Exchange
+  description: Exchange API endpoint
 security:
 - bearerAuth: []
