@@ -17,6 +17,7 @@ class HasListingTest extends TestCase
     {
         $request = Request::create('/');
 
+        // Check the default values in the HasListing trait
         $builder = Mockery::spy(Builder::class, function (MockInterface $mock) {
             $paginator = Mockery::mock(LengthAwarePaginator::class);
             $mock->shouldReceive('orderBy')->with('created_at', 'asc')->andReturnSelf();
@@ -38,6 +39,7 @@ class HasListingTest extends TestCase
             'page' => -999,
         ]);
 
+        // Check the fallback values in the HasListing trait
         $builder = Mockery::mock(Builder::class, function (MockInterface $mock) {
             $paginator = Mockery::mock(LengthAwarePaginator::class);
             $mock->shouldReceive('orderBy')->with('created_at', 'asc')->andReturnSelf();
