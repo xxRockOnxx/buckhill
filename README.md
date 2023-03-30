@@ -28,6 +28,21 @@ docker compose exec php php artisan ide-helper:generate
 docker compose cp php:/var/www/html/_ide_helper.php .
 ```
 
+## Larastan and PHP Insights
+
+```bash
+docker compose exec php php artisan insights
+docker compose exec php vendor/bin/phpstan analyse --memory-limit=1G
+```
+
+Memory limit is needed to prevent memory exhaustion
+
+## Running the tests
+
+```bash
+docker compose exec php php artisan test
+```
+
 ## Level 3 Challenge (Currency exchange rate)
 
 The package required for this challenge can be found under `packages/exchange` directory.
