@@ -8,13 +8,13 @@ use Lemuel\Notification\SimpleTeamsMessagePayload;
 
 class SendOrderStatusToTeams
 {
-    private $http;
+    private Factory $http;
 
-    private $webhook;
+    private string $webhook;
 
-    private $messageClass;
+    private string $messageClass;
 
-    public function __construct(Factory $http, string $webhook, string $messageClass = null)
+    public function __construct(Factory $http, string $webhook, ?string $messageClass = null)
     {
         $this->http = $http;
         $this->webhook = $webhook;
@@ -23,7 +23,7 @@ class SendOrderStatusToTeams
 
     public function handle(OrderStatusUpdated $event)
     {
-        /** @var TeamsMessagePayload */
+        /** @var TeamsMessagePayload $message */
         $message = new $this->messageClass($event);
 
         $this->http->post($this->webhook, $message->getMessage($event));

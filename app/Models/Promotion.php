@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 /**
  * @method static LengthAwarePaginator listing(Request $request)
+ * @implements HasListingContract<Promotion>
  */
 class Promotion extends Model implements HasListingContract
 {

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 /**
  * @method static LengthAwarePaginator listing(Request $request)
+ * @implements HasListingContract<Order>
  */
 class Order extends Model implements HasListingContract
 {

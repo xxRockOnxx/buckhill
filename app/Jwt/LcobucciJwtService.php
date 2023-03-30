@@ -7,6 +7,9 @@ use Lcobucci\JWT\Token\Plain;
 
 class LcobucciJwtService implements JwtService
 {
+    /**
+     * @var Configuration
+     */
     protected $configuration;
 
     public function __construct(Configuration $configuration)
@@ -32,6 +35,10 @@ class LcobucciJwtService implements JwtService
 
     public function parseToken(string $token): array
     {
+        if (empty($token)) {
+            return [];
+        }
+
         $token = $this->configuration->parser()->parse($token);
 
         // Default Lcobucci implementation returns a Plain token.

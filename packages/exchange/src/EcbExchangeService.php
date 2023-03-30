@@ -8,7 +8,7 @@ class EcbExchangeService implements ExchangeService
 {
     private string $endpoint = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
 
-    private $http;
+    private Factory $http;
 
     public function __construct(Factory $http)
     {

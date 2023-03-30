@@ -9,11 +9,11 @@ class OrderStatusUpdated
 {
     use Dispatchable, SerializesModels;
 
-    public $uuid;
+    public string $uuid;
 
-    public $status;
+    public string $status;
 
-    public $timestamp;
+    public int $timestamp;
 
     public function __construct(string $uuid, string $status, int $timestamp)
     {

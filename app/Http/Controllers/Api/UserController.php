@@ -20,7 +20,7 @@ class UserController
      */
     public function getUserOrders(Request $request): LengthAwarePaginator
     {
-        /** @var User */
+        /** @var User $user */
         $user = $request->user();
 
         return $user->orders()

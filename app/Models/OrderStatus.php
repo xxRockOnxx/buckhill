@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static LengthAwarePaginator listing(Request $request)
+ * @implements HasListingContract<OrderStatus>
+ */
 class OrderStatus extends Model implements HasListingContract
 {
     use HasFactory, HasListing;

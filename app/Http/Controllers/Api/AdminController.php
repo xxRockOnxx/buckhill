@@ -56,7 +56,7 @@ class AdminController
             return Response::error(422, 'Failed to authenticate user');
         }
 
-        /** @var User */
+        /** @var User $user */
         $user = auth()->user();
         $user->last_login_at = now();
         $user->save();
