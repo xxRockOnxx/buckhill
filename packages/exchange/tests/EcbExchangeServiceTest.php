@@ -4,8 +4,8 @@ namespace Lemuel\Exchange\Tests;
 
 use Illuminate\Support\Facades\Http;
 use Lemuel\Exchange\EcbExchangeService;
-use Lemuel\Exchange\UnreachableExchangeException;
-use Lemuel\Exchange\UnsupportedCurrencyException;
+use Lemuel\Exchange\UnreachableExchange;
+use Lemuel\Exchange\UnsupportedCurrency;
 use Orchestra\Testbench\TestCase;
 
 class EcbExchangeServiceTest extends TestCase
@@ -42,7 +42,7 @@ class EcbExchangeServiceTest extends TestCase
         $service = new EcbExchangeService($http);
         $service->setEndpoint('mocked-exchange.com');
 
-        $this->expectException(UnreachableExchangeException::class);
+        $this->expectException(UnreachableExchange::class);
 
         $service->getExchangeRate(1, 'USD');
     }
@@ -56,7 +56,7 @@ class EcbExchangeServiceTest extends TestCase
         $service = new EcbExchangeService($http);
         $service->setEndpoint('mocked-exchange.com');
 
-        $this->expectException(UnreachableExchangeException::class);
+        $this->expectException(UnreachableExchange::class);
 
         $service->getExchangeRate(1, 'USD');
     }
@@ -72,7 +72,7 @@ class EcbExchangeServiceTest extends TestCase
         $service = new EcbExchangeService($http);
         $service->setEndpoint('mocked-exchange.com');
 
-        $this->expectException(UnsupportedCurrencyException::class);
+        $this->expectException(UnsupportedCurrency::class);
 
         $service->getExchangeRate(1, 'ASD');
     }

@@ -2,7 +2,7 @@
 
 namespace Lemuel\Exchange;
 
-class UnreachableExchangeException extends \Exception
+class UnreachableExchange extends \Exception
 {
     public function __construct(string $message = 'Unable to reach exchange service')
     {

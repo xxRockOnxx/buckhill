@@ -26,9 +26,9 @@ Set `exchange.endpoint` (Default: `exchange`) to change the registered endpoint.
 
 ## Error handling
 
-`UnreachableExchangeException` is going to be thrown if the exchange service is unreachable or returned an invalid response.
+`UnreachableExchange` is going to be thrown if the exchange service is unreachable or returned an invalid response.
 
-`UnsupportedCurrencyException` is going to be thrown if the exchange service does not have the requested currency.
+`UnsupportedCurrency` is going to be thrown if the exchange service does not have the requested currency.
 
 ## Testing
 

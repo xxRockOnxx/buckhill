@@ -4,7 +4,7 @@ namespace Lemuel\Exchange;
 
 use Exception;
 
-class UnsupportedCurrencyException extends Exception
+class UnsupportedCurrency extends Exception
 {
     public function __construct(string $currency)
     {

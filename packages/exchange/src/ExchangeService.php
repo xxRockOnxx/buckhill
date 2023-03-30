@@ -5,7 +5,7 @@ namespace Lemuel\Exchange;
 interface ExchangeService
 {
     /**
-     * @throws UnsupportedCurrencyException
+     * @throws UnsupportedCurrency
      */
     public function getExchangeRate(float $amount, string $currency): float;
 }

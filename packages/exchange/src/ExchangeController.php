@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ExchangeController
 {
-    public function __invoke(Request $request , ExchangeService $service)
+    public function __invoke(Request $request, ExchangeService $service)
     {
         $validator = validator($request->all(), [
             'amount' => 'required|numeric',
@@ -31,7 +31,7 @@ class ExchangeController
             return $this->success(200, [
                 'amount' => $amount,
             ]);
-        } catch (UnsupportedCurrencyException $e) {
+        } catch (UnsupportedCurrency $e) {
             return $this->error(400, $e->getMessage());
         } catch (\Exception $e) {
             return $this->error();

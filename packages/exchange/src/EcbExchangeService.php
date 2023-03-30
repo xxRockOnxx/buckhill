@@ -30,7 +30,7 @@ class EcbExchangeService implements ExchangeService
         $xml = $this->http->get($this->endpoint);
 
         if ($xml->failed()) {
-            throw new UnreachableExchangeException();
+            throw new UnreachableExchange();
         }
 
         libxml_use_internal_errors(true);
@@ -38,7 +38,7 @@ class EcbExchangeService implements ExchangeService
         $obj = simplexml_load_string($xml->body());
 
         if (! $obj) {
-            throw new UnreachableExchangeException();
+            throw new UnreachableExchange();
         }
 
         $array = json_decode(json_encode($obj->Cube->Cube), true)['Cube'];
@@ -47,7 +47,7 @@ class EcbExchangeService implements ExchangeService
         $found = $collection->firstWhere('currency', strtoupper($currency));
 
         if (! $found) {
-            throw new UnsupportedCurrencyException($currency);
+            throw new UnsupportedCurrency($currency);
         }
 
         return $amount * $found['rate'];

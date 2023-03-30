@@ -5,7 +5,7 @@ namespace Lemuel\Exchange\Tests;
 use Illuminate\Http\Request;
 use Lemuel\Exchange\ExchangeController;
 use Lemuel\Exchange\ExchangeService;
-use Lemuel\Exchange\UnsupportedCurrencyException;
+use Lemuel\Exchange\UnsupportedCurrency;
 use Orchestra\Testbench\TestCase;
 
 class ExchangeControllerTest extends TestCase
@@ -53,7 +53,7 @@ class ExchangeControllerTest extends TestCase
 
     public function test_unsupported_currency()
     {
-        $error = new UnsupportedCurrencyException('ABC');
+        $error = new UnsupportedCurrency('ABC');
 
         $service = $this->mock(ExchangeService::class, function ($mock) use ($error) {
             $mock->shouldReceive('getExchangeRate')
