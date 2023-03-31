@@ -15,6 +15,10 @@
         {
             "type": "path",
             "url": "./packages/notification"
+        },
+        {
+            "type": "path",
+            "url": "./packages/state-machine"
         }
     ],
     "require": {
@@ -26,7 +30,8 @@
         "lcobucci/clock": "^3.1",
         "lcobucci/jwt": "^5.0",
         "lemuel/exchange": "@dev",
-        "lemuel/notification": "@dev"
+        "lemuel/notification": "@dev",
+        "lemuel/state-machine": "@dev"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e4faedaba87cd902456c3b529a4d59c",
+    "content-hash": "4aa2a97119705b37f2e28c4488933359",
     "packages": [
         {
             "name": "brick/math",
@@ -1897,12 +1897,13 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/notification",
-                "reference": "f29a18fc940c4b2df0e865f908fc234de7b07af1"
+                "reference": "ac29e01dbcc3c004e1d881ef3fcc3ee749a62e9e"
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.5",
                 "illuminate/events": "^10.0",
                 "illuminate/queue": "^10.0",
+                "illuminate/support": "^10.0",
                 "php": ">=8.2.0"
             },
             "require-dev": {
@@ -1928,7 +1929,41 @@
                     "Lemuel\\Notification\\Tests\\": "tests"
                 }
             },
-            "description": "A Laravel package for currency exchange",
+            "description": "A Laravel package for sending order status update to a webhook",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "lemuel/state-machine",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/state-machine",
+                "reference": "19798cb16899906f4b1c936785d9f5fdf92d8631"
+            },
+            "require": {
+                "illuminate/collections": "^10.0",
+                "illuminate/support": "^10.0",
+                "php": ">=8.2.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^7.0",
+                "orchestra/testbench": "^8.1",
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lemuel\\StateMachine\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Lemuel\\StateMachine\\Tests\\": "tests"
+                }
+            },
+            "description": "A Laravel package that adds State Machine functionality to your Order Eloquent models.",
             "transport-options": {
                 "relative": true
             }
@@ -10754,7 +10789,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "lemuel/exchange": 20,
-        "lemuel/notification": 20
+        "lemuel/notification": 20,
+        "lemuel/state-machine": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -9,14 +9,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
+use Lemuel\StateMachine\Contracts\HasStateMachine as HasStateMachineContract;
+use Lemuel\StateMachine\Traits\HasStateMachine;
 
 /**
  * @method static LengthAwarePaginator listing(Request $request)
  * @implements HasListingContract<Order>
  */
-class Order extends Model implements HasListingContract
+class Order extends Model implements HasListingContract, HasStateMachineContract
 {
-    use HasFactory, HasListing;
+    use HasFactory, HasListing, HasStateMachine;
 
     protected $casts = [
         'products' => 'array',
@@ -64,5 +66,15 @@ class Order extends Model implements HasListingContract
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getCurrentState(): string
+    {
+        return $this->orderStatus->title;
+    }
+
+    public function setCurrentState(string $state): void
+    {
+        $this->order_status_id = OrderStatus::where('title', $state)->first()->id;
     }
 }

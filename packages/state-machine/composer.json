@@ -1,0 +1,28 @@
+{
+    "name": "lemuel/state-machine",
+    "description": "A Laravel package that adds State Machine functionality to your Eloquent models.",
+    "require": {
+        "php": ">=8.2.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Lemuel\\StateMachine\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lemuel\\StateMachine\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require-dev": {
+        "illuminate/database": "^10.0",
+        "nunomaduro/collision": "^7.0",
+        "orchestra/testbench": "^8.1",
+        "phpunit/phpunit": "^10.0"
+    }
+}
