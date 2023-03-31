@@ -74,3 +74,9 @@ You can check the included `README.md` for more info.
 The package required for this challenge can be found under `packages/notification` directory.
 
 You can check the included `README.md` for more info.
+
+## Level 5 Challenge (State Machine Trait)
+
+The package required for this challenge can be found under `packages/state-machine` directory.
+
+You can check the included `README.md` for more info.
